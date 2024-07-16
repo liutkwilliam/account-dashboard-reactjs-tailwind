@@ -20,7 +20,7 @@ function App() {
     <div>
       <div>
         {links.map(link => {
-          return <Link to={link.link}>{link.text}</Link>
+          return <Link className="p-4 m-4 hover:underline" to={link.link}>{link.text}</Link>
         })}
       </div>
       <Routes>

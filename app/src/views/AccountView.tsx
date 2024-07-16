@@ -6,8 +6,16 @@ const AccountView = () => {
   ]
 
   return (<div>
-    <h1>Account View</h1>
+    <h1 className="text-6xl p-4 m-4 font-bold">Account View</h1>
     {/* create elements here */}
+    {data.map(dataElement => {
+      return (
+        <div className="flex">
+          <span className="flex-1 text-left p-2 m-1">{dataElement.label}</span>
+          <span className="flex-1 text-left p-2 m-1">{dataElement.content}</span>
+        </div>
+      )
+    })}
   </div>)
 }
 

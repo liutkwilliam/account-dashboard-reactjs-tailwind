@@ -42,6 +42,7 @@ function App() {
         />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+      <div className="my-4"><p className="text-xs">This content is developed by <a href="https://github.com/rarya618">Russal Arya</a>, modified by <a href="https://github.com/liutkwilliam">William Liu</a>.</p></div>
     </div>
   )
 }

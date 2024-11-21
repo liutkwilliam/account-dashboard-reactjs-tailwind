@@ -1,6 +1,6 @@
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { FormEvent } from "react"
-import { auth } from "../firebase/config"
+import { auth } from "../loginInfo/config"
 import { getUserFromDatabase } from "../firebase/database"
 
 export type FormInput = {

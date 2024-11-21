@@ -1,7 +1,7 @@
 import { FormEvent } from "react"
 import { FormInput, GenerateFormElements } from "./SignIn";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase/config";
+import { auth } from "../loginInfo/config";
 import { addUserToDatabase } from "../firebase/database";
 
 const SignUp = () => {

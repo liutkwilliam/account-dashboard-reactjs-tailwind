@@ -1,4 +1,7 @@
+import { signInWithEmailAndPassword } from "firebase/auth"
 import { FormEvent } from "react"
+import { auth } from "../firebase/config"
+import { getUserFromDatabase } from "../firebase/database"
 
 export type FormInput = {
   label: string, 
@@ -48,6 +51,17 @@ const SignIn = () => {
       if (data.email === "") throw("Please enter an email");
       if (data.password === "") throw("Please enter a password");
       if (data.password.length < 8) throw("The password should be at least 8 characters long");
+    
+      signInWithEmailAndPassword(auth, data.email, data.password)
+      .then(async(response) => {
+        await getUserFromDatabase(response.user.uid);
+        sessionStorage.setItem(response.user.uid, "User ID");
+        window.location.href = "/account";
+      })
+      .catch((error) => {
+        alert(error);
+      })
+    
     } catch (error) {
       alert(error);
     }

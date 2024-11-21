@@ -1,8 +1,33 @@
+import { useEffect, useState } from "react";
+import { getUserFromDatabase } from "../firebase/database";
+
 const AccountView = () => {
+  let uid = sessionStorage.getItem('User ID');
+  let userId = uid ? uid : "";
+
+  const [userData, setUserData] = useState({});
+
+  async function getUserData() {
+    if (userId) {
+      try {
+        const tempDoc = await getUserFromDatabase(userId);
+        if (tempDoc) {
+          setUserData(tempDoc);
+        }
+      } catch (error) {
+        alert(error);
+      }
+    }
+  }
+
+  useEffect(() => {
+    getUserData();
+  }, [])
+
   let data = [
-    {label: "First name", content: "John"},
-    {label: "Last name", content: "Doe"},
-    {label: "Email", content: "john.doe@example.com"}
+    {label: "First name", content: userData.firstName },
+    {label: "Last name", content: userData.lastName },
+    {label: "Email", content: userData.email }
   ]
 
   return (<div>

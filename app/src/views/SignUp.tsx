@@ -1,5 +1,8 @@
 import { FormEvent } from "react"
 import { FormInput, GenerateFormElements } from "./SignIn";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase/config";
+import { addUserToDatabase } from "../firebase/database";
 
 const SignUp = () => {
   let formInputs: FormInput[] = [
@@ -11,7 +14,6 @@ const SignUp = () => {
   ];
   
   // write code here
-
   const signUp = (event: FormEvent) => {
     event.preventDefault();
 
@@ -36,7 +38,24 @@ const SignUp = () => {
       if (data.confirmPassword === '') throw("Please confirm your password")
       if (data.password.length < 8) throw("The password should be at least 8 characters long");
       if (data.password !== data.confirmPassword) throw ("The password does not match")
-    } catch (error) {
+
+      createUserWithEmailAndPassword(auth, data.email, data.password)
+      .then(async (response) => {
+        const docData = {
+          email: data.email, 
+          firstName: data.firstName,
+          lastName: data.lastName, 
+        };
+
+        await addUserToDatabase(response.user.uid, docData);
+        sessionStorage.setItem(response.user.uid, "User ID");
+        window.location.href = "/account";
+      })
+      .catch((e) => {
+        alert(e);
+      })
+
+      } catch (error) {
       alert(error);
     }
   }

@@ -1,6 +1,6 @@
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { FormEvent } from "react"
-import { auth } from "../loginInfo/config"
+import { auth } from "../firebase/config"
 import { getUserFromDatabase } from "../firebase/database"
 
 export type FormInput = {
@@ -54,8 +54,10 @@ const SignIn = () => {
     
       signInWithEmailAndPassword(auth, data.email, data.password)
       .then(async(response) => {
+        // Fetch user data from database
         await getUserFromDatabase(response.user.uid);
-        sessionStorage.setItem(response.user.uid, "User ID");
+        // Store user ID under a consistent key
+        sessionStorage.setItem("User ID", response.user.uid);
         window.location.href = "/account";
       })
       .catch((error) => {

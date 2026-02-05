@@ -1,7 +1,7 @@
 import { FormEvent } from "react"
 import { FormInput, GenerateFormElements } from "./SignIn";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../loginInfo/config";
+import { auth } from "../firebase/config";
 import { addUserToDatabase } from "../firebase/database";
 
 const SignUp = () => {
@@ -48,7 +48,8 @@ const SignUp = () => {
         };
 
         await addUserToDatabase(response.user.uid, docData);
-        sessionStorage.setItem(response.user.uid, "User ID");
+        // Store user ID under a consistent key
+        sessionStorage.setItem("User ID", response.user.uid);
         window.location.href = "/account";
       })
       .catch((e) => {

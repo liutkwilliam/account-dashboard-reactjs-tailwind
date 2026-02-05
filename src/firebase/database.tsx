@@ -1,5 +1,5 @@
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { db } from "../loginInfo/config";
+import { db } from "./config";
 
 const addUserToDatabase = async (userId: string, data: {}) => {
     try {

@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
 import { getUserFromDatabase } from "../firebase/database";
 
+// Define a type for user data
+type UserData = {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+};
+
 const AccountView = () => {
   let uid = sessionStorage.getItem('User ID');
   let userId = uid ? uid : "";
 
-  const [userData, setUserData] = useState({});
+  // Use the UserData type and default to empty object
+  const [userData, setUserData] = useState<UserData>({});
 
   async function getUserData() {
     if (userId) {
@@ -25,9 +33,9 @@ const AccountView = () => {
   }, [])
 
   let data = [
-    {label: "First name", content: userData.firstName },
-    {label: "Last name", content: userData.lastName },
-    {label: "Email", content: userData.email }
+    {label: "First name", content: userData.firstName || "" },
+    {label: "Last name", content: userData.lastName || "" },
+    {label: "Email", content: userData.email || "" }
   ]
 
   return (<div>
@@ -35,7 +43,7 @@ const AccountView = () => {
     {/* create elements here */}
     {data.map(dataElement => {
       return (
-        <div className="flex">
+        <div className="flex" key={dataElement.label}>
           <span className="flex-1 text-left p-2 m-1">{dataElement.label}</span>
           <span className="flex-1 text-left p-2 m-1">{dataElement.content}</span>
         </div>
